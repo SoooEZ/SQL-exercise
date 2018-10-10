@@ -90,6 +90,9 @@ ORDER BY price ASC
   
 
 -- 1.16 Select the name of each manufacturer along with the name and price of its most expensive product.
+select temp2.name as m_name, temp1.p_price, temp1.p_name from (select products.name as p_name, products.price as p_price, manufacturers.name as m_name from products join manufacturers on products.manufacturer=manufacturers.code) temp1 join (select m.name, max(p.price) as max_price from products p join manufacturers m on p.manufacturer=m.code group by m.name having max(price)) temp2 on temp1.m_name=temp2.name where p_price=max_price;
+
+
 select max_price_mapping.name as manu_name, max_price_mapping.price, products_with_manu_name.name as product_name
 from 
     (SELECT Manufacturers.Name, MAX(Price) price
